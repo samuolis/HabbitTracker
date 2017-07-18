@@ -47,25 +47,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void displayDatabaseInfo() {
 
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                HabbitEntry._ID,
-                HabbitEntry.COLUMN_HABBIT,
-                HabbitEntry.COLUMN_TIME};
-
-
-        Cursor cursor = db.query(
-                HabbitEntry.TABLE_NAME,   // The table to query
-                projection,            // The columns to return
-                null,                  // The columns for the WHERE clause
-                null,                  // The values for the WHERE clause
-                null,                  // Don't group the rows
-                null,                  // Don't filter by row groups
-                null);                   // The sort order
+        Cursor cursor = queryAllHabbits();
 
         TextView displayView = (TextView) findViewById(R.id.text_view_habbit);
 
@@ -99,6 +81,27 @@ public class MainActivity extends AppCompatActivity {
             // resources and makes it invalid.
             cursor.close();
         }
+    }
+
+    public Cursor queryAllHabbits() {
+        // Create and/or open a database to read from it
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        String[] projection = {
+                HabbitEntry._ID,
+                HabbitEntry.COLUMN_HABBIT,
+                HabbitEntry.COLUMN_TIME};
+
+
+        Cursor cursor = db.query(
+                HabbitEntry.TABLE_NAME,   // The table to query
+                projection,            // The columns to return
+                null,                  // The columns for the WHERE clause
+                null,                  // The values for the WHERE clause
+                null,                  // Don't group the rows
+                null,                  // Don't filter by row groups
+                null);                   // The sort order
+        return cursor;
     }
 
 
